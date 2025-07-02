@@ -1,0 +1,28 @@
+{
+  "template": "https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin",
+  "commit": "d306850507a46af96b5ab71129582655ce534c86",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "full_name": "Guillaume Gaisné",
+      "email": "guillaume.gaisne@esrf.fr",
+      "github_username": "AddMorePower",
+      "plugin_name": "nomad-DFXM_parser",
+      "module_name": "nomad_dfxm_parser",
+      "short_description": "A NOMAD plugin for DFXM measurements produced within the AddMorePower project.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "include_schema_package": true,
+      "include_normalizer": false,
+      "include_parser": true,
+      "include_app": false,
+      "include_example_uploads": false,
+      "_copy_without_render": [
+        "*.html"
+      ],
+      "_template": "https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin",
+      "_commit": "d306850507a46af96b5ab71129582655ce534c86"
+    }
+  },
+  "directory": null
+}
