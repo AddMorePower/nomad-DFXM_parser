@@ -1,0 +1,256 @@
+definitions:
+  sections:
+    Beam:
+      quantities:
+        extent:
+          type: np.float32
+          shape: [2]
+          description: Dimension of the beam.
+          unit: mm
+    Condenser:
+      quantities:
+        number:
+          type: int
+          description: Amount of lenses in the condenser.
+        radius:
+          type: np.float32
+          description: Radius of the lenses in the condenser.
+        nature:
+          type: str
+          description: Nature of the lenses used in the condenser.
+    Detector:
+      quantities:
+        magnification:
+          type: str
+          description: Magnification used in the detector.
+        position:
+          type: str
+          description: Position of the detector in the experimental setup.
+        nature:
+          type: str
+          description: Model of the detector used.
+        x_pixel_size:
+          type: np.float32
+          description: Horizontal dimension of the pixels of the detector.
+        y_pixel_size:
+          type: np.float32
+          description: Vertical dimension of the pixels of the detector.
+    Goniometer:
+      quantities:
+        chi:
+          type: np.float32
+          description: Position of the motor chi.
+          unit: deg
+        mu:
+          type: np.float32
+          shape: ['*']
+          description: Position of the motor mu.
+          unit: deg
+        omega:
+          type: np.float32
+          description: Position of the motor omega.
+          unit: deg
+        phi:
+          type: np.float32
+          shape: ['*']
+          description: Position of the motor phi.
+          unit: deg
+    Monochromator:
+      quantities:
+        name:
+          type: str
+          description: Name of the monochromator.
+        bandwidth:
+          type: np.float32
+          description: Spectral bandwidth of the monochromator.
+          unit: um
+        energy:
+          type: np.float32
+          description: Energy selected by the monochromator.
+          unit: keV
+        angle:
+          type: np.float32
+          description: Angle of the monochromator.
+          unit: deg
+    Objective:
+      quantities:
+        number:
+          type: int
+          description: Number of lenses in the objective.
+        radius:
+          type: np.float32
+          description: Radius of the lenses of the objective.
+        nature:
+          type: str
+          description: Nature of the lenses of the objective.
+        pitch:
+          type: np.float32
+          description: Pitch of the objective.
+        yaw:
+          type: np.float32
+          description: Yaw of the objective.
+        position_x:
+          type: np.float32
+          description: Position along the x-axis of the objective.
+        position_y:
+          type: np.float32
+          description: Position along the y-axis of the objective.
+        position_z:
+          type: np.float32
+          description: Position along the z-axis of the objective.
+    Device:
+      quantities:
+        name:
+          type: str
+          description: Name of the source device.
+        gap:
+          type: str
+          description: Name of the gap of the source device.
+    Source:
+      quantities:
+        name:
+          type: str
+          description: Name of the x-ray source.
+        probe:
+          type: str
+          description: Type of probe for the experiment.
+        nature:
+          type: str
+          description: Name of the x-ray source.
+      sub_sections:
+        devices:
+          section: Device
+          repeats: true
+    Actuator:
+      quantities:
+        name:
+          type: str
+          description: Name of the actuator.
+        nature:
+          type: str
+          description: Nature of the lenses connected to the actuator.
+        number:
+          type: int
+          description: Amount of lenses connected to the actuator.
+        radius:
+          type: np.float32
+          description: Radius of the lenses connected to the actuator.
+          unit: um
+    Transfocator:
+      sub_sections:
+        actuators:
+          section: Actuator
+          repeats: true
+    Instrument:
+      quantities:
+        name:
+          type: str
+          description: Name of the isntrument used for the measurement.
+        citation:
+          type: str
+          description: Publication that describes the instrument.
+      sub_sections:
+        beam:
+          section: Beam
+          repeats: false
+        condenser:
+          section: Condenser
+          repeats: false
+        detector:
+          section: Detector
+          repeats: false
+        goniometer:
+          section: Goniometer
+          repeats: false
+        monochromator:
+          section: Monochromator
+          repeats: false
+        objective:
+          section: Objective
+          repeats: false
+        source:
+          section: Source
+          repeats: false
+        transfocator:
+          section: Transfocator
+          repeats: false
+    Process:
+      quantities:
+        date:
+          type: Datetime
+          description: Date of the processing of the raw files.
+        doi_raw_data:
+          type: str
+          description: DOI of the raw data.
+        link_raw_data:
+          type: str
+          description: Link to the raw data.
+        program:
+          type: str
+          description: Programm used to process the raw files.
+        program_repo:
+          type: str
+          description: Online repository of the processing program.
+        version:
+          type: str
+          description: Version of the program used to process the raw data.
+    Sample:
+      quantities:
+        chemical_formula:
+          type: str
+          description: Chemical formula of the sample measured.
+        manufacturer:
+          type: str
+          description: Name of the manufacturer of the sample.
+        name:
+          type: str
+          description: Name of the sample.
+        mass:
+          type: np.float32
+          description: Mass of the sample.
+          unit: kg
+        space_group:
+          type: str
+          description: Space group of the crystal involved.
+        structure:
+          type: str
+          description: Structure of the crystal system of the sample.
+        thickness:
+          type: np.float32
+          description: Thickness of the sample.
+          unit: um
+        unit_cell_abc:
+          type: np.float32
+          shape: [3]
+          description: Size of the unit cell of the crystal.
+          unit: Å
+        unit_cell_alphabetagamma:
+          type: np.float32
+          shape: [3]
+          description: Angles of the unit cell of the crystal.
+          unit: deg
+        unit_cell_volume:
+          type: np.float32
+          description: Volume of the unit cell of the crystal.
+          unit: Å³
+    DFXMOutput:
+      quantities:
+        definition:
+          type: str
+          description: Name of the pseudo NeXus application definition.
+        start_time:
+          type: str
+          description: Date at the start of the acquisition.
+        end_time:
+          type: str
+          description: Date at the end of the acquisition.
+      sub_sections:
+        instrument:
+          section: Instrument
+          repeats: false
+        process:
+          section: Process
+          repeats: false
+        sample:
+          section: Sample
+          repeats: false
