@@ -12,7 +12,7 @@ class NewParserEntryPoint(ParserEntryPoint):
 
 
 parser_entry_point = NewParserEntryPoint(
-    name='NewParser',
-    description='New parser entry point configuration.',
-    mainfile_name_re=r'.*\.newmainfilename',
+    name='DFXMParser',
+    description='DFXM parser entry point configuration.',
+    mainfile_name_re=r'.*\.h5',
 )
