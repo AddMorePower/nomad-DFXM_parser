@@ -14,7 +14,7 @@ import h5py
 import numpy as np
 
 from nomad.config import config
-from nomad.datamodel.metainfo.workflow import Workflow
+from nomad.datamodel.results import Cell, Material, Results, Symmetry, System
 from nomad.parsing.parser import MatchingParser
 
 import nomad_dfxm_parser.schema_packages.schema_package as dfxm
@@ -155,6 +155,28 @@ class NewParser(MatchingParser):
         self.parse_source(instrument, instrumentH5)
         self.parse_transfocator(instrument, instrumentH5)
 
+    def store_results(self):
+        sampleH5 = self.datafile['sample']
+
+        cell = Cell()
+        cell.a, cell.b, cell.c = sampleH5['unit_cell_abc']
+        cell.alpha, cell.beta, cell.gamma = sampleH5['unit_cell_alphabetagamma']
+        cell.volume = self.safe_extract(sampleH5, 'unit_cell_volume')
+
+        topology = System()
+        topology.cell = cell
+
+        symmetry = Symmetry()
+        symmetry.space_group_symbol = self.extract_string(sampleH5, 'space_group')
+
+        material = Material()
+        material.elements = [self.extract_string(sampleH5, 'chemical_formula')]
+        material.symmetry = symmetry
+        material.topology.append(topology)
+        results = Results()
+        results.material = material
+        return results
+
 
     def parse(
         self,
@@ -182,3 +204,5 @@ class NewParser(MatchingParser):
         self.parse_instrument()
         self.parse_process()
         self.parse_sample()
+        results = self.store_results()
+        archive.results = results
